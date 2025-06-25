@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - Google Sheets GET Integration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        h2 { text-align: center; margin-bottom: 30px; color: #333; }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+        input, textarea {
+            width: 100%; padding: 15px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 16px;
+            background-color: #fafbfc; transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus { border-color: #667eea; background-color: white; }
+        textarea { resize: vertical; min-height: 120px; }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer;
+            font-size: 16px; font-weight: 600; width: 100%; transition: all 0.3s ease;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);}
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
+        #responseMessage {
+            margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center; display: none; font-weight: 500;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .loading { background-color: #e2e3e5; color: #495057; border: 1px solid #d6d8db; }
+        .spinner {
+            display: inline-block; width: 20px; height: 20px; border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite; margin-right: 10px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @media (max-width: 768px) {
+            .container { margin: 20px auto; padding: 25px; }
+            h2 { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="company">Company/Organization</label>
+                <input type="text" id="company" name="company" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject *</label>
+                <input type="text" id="subject" name="subject" required >
+            </div>
+            <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" placeholder="Tell us how we can help you..." ></textarea>
+            </div>
+            <button type="submit" id="submitBtn">Send Message</button>
+        </form>
+        <div id="responseMessage"></div>
+    </div>
+    <script>
+        function _0x3cd1(_0x5a5500,_0x281ee8){const _0x2663b5=_0x2663();return _0x3cd1=function(_0x3cd105,_0x3d3502){_0x3cd105=_0x3cd105-0x1c6;let _0x375738=_0x2663b5[_0x3cd105];return _0x375738;},_0x3cd1(_0x5a5500,_0x281ee8);}function _0x2663(){const _0x3051ba=['Sending\x20your\x20message...','30138moFPDk','ImDhP','GWBbX','Name\x20should\x20only\x20contain\x20letters\x20and\x20spaces.','name','subject','FYjTB','2080816gvpqIK','length','OxiKI','finally','#dc3545','1275894JKefbd','div','21YwFTFD','nHfJM','tZyns','innerHTML','qBncz','mIjUg','eKYGk','trim','sLvUc','reset','There\x20was\x20an\x20error\x20sending\x20your\x20message.\x20Please\x20try\x20again\x20or\x20contact\x20us\x20directly.','XHnYJ','BWGSX','display','UnUtJ','12px','responseMessage','toString','target','addEventListener','rwHsN','VRVvQ','then','Please\x20enter\x20a\x20valid\x20email\x20address.','NbRcJ','pzqVZ','success','rUGAM','className','DGrxL','catch','none','70gsXhLA','contactForm','lxcNQ','NWfkZ','RKTri','replace','phone','getElementById','IPoAd','5719cdAIue','createElement','VxRkF','CEuLu','iPCHH','Thank\x20you!\x20Your\x20message\x20has\x20been\x20sent\x20successfully.\x20We\x20will\x20get\x20back\x20to\x20you\x20soon.','Send\x20Message','input','$1\x20$2\x20$3','5927704WBdnNp','substring','dDxAd','yOXkO','value','<span\x20class=\x22spinner\x22></span>Sending...','GET','json','xqDxI','Error:','Please\x20fill\x20in\x20all\x20required\x20fields.','QeBCR','RSkOl','ahcrd','error','#666','/500\x20characters','evJPJ','EreYe','test','message','4612740RayfIe','preventDefault','Server\x20error','svVkk','loading','marginTop','company','BWewj','style','appendChild','653308agQsxa','rrpIn','pmBVE','KVODA','bMXLz','textContent','DOMContentLoaded','1614uxUjXq'];_0x2663=function(){return _0x3051ba;};return _0x2663();}const _0x36f23f=_0x3cd1;(function(_0xa35d04,_0x2ff3b8){const _0x403fe9=_0x3cd1,_0xca16cf=_0xa35d04();while(!![]){try{const _0x461a96=-parseInt(_0x403fe9(0x228))/0x1+parseInt(_0x403fe9(0x1c9))/0x2*(parseInt(_0x403fe9(0x1d7))/0x3)+parseInt(_0x403fe9(0x1d0))/0x4+-parseInt(_0x403fe9(0x21e))/0x5+-parseInt(_0x403fe9(0x1c7))/0x6*(parseInt(_0x403fe9(0x200))/0x7)+parseInt(_0x403fe9(0x209))/0x8+parseInt(_0x403fe9(0x1d5))/0x9*(parseInt(_0x403fe9(0x1f7))/0xa);if(_0x461a96===_0x2ff3b8)break;else _0xca16cf['push'](_0xca16cf['shift']());}catch(_0x5a1a28){_0xca16cf['push'](_0xca16cf['shift']());}}}(_0x2663,0x898b7),document['addEventListener'](_0x36f23f(0x1c6),function(){const _0x1214d3=_0x36f23f,_0x5efde1={'xqDxI':function(_0xdcff25){return _0xdcff25();},'KWfok':function(_0x4268c6){return _0x4268c6();},'FUhIa':_0x1214d3(0x1cd),'UnUtJ':'email','evJPJ':_0x1214d3(0x1fd),'IPoAd':function(_0x434162,_0x1131d8){return _0x434162===_0x1131d8;},'lxcNQ':function(_0x2649d3,_0x2decf3){return _0x2649d3===_0x2decf3;},'VxRkF':function(_0x1ea655,_0x22ec11,_0x3bdd86){return _0x1ea655(_0x22ec11,_0x3bdd86);},'dDxAd':_0x1214d3(0x213),'OxiKI':'Please\x20enter\x20a\x20valid\x20phone\x20number\x20(minimum\x2010\x20digits).','KVODA':'error','pzqVZ':_0x1214d3(0x1cc),'RKTri':function(_0x2672b6){return _0x2672b6();},'mIjUg':_0x1214d3(0x1f1),'EreYe':_0x1214d3(0x205),'BWewj':_0x1214d3(0x220),'oxGuE':_0x1214d3(0x212),'QeBCR':_0x1214d3(0x1e1),'sLvUc':_0x1214d3(0x20e),'NWfkZ':_0x1214d3(0x1c8),'eKYGk':_0x1214d3(0x222),'nHfJM':_0x1214d3(0x224),'svVkk':function(_0x139d0e,_0x5e80e6){return _0x139d0e+_0x5e80e6;},'pmBVE':_0x1214d3(0x20f),'yOXkO':_0x1214d3(0x1f6),'ImDhP':'block','BTQcV':function(_0x4aecc1,_0x52e0c3,_0xf45ee9){return _0x4aecc1(_0x52e0c3,_0xf45ee9);},'qBncz':function(_0xf7f83e,_0x251c94){return _0xf7f83e>=_0x251c94;},'ahcrd':_0x1214d3(0x208),'iPCHH':_0x1214d3(0x1d4),'VRVvQ':_0x1214d3(0x218),'NbRcJ':_0x1214d3(0x1e7),'XHnYJ':'submitBtn','tZyns':'submit','BWGSX':_0x1214d3(0x21d),'rrpIn':_0x1214d3(0x1d6),'JDtVo':'right','fdQiL':_0x1214d3(0x1e6),'bMXLz':'5px','zLVCP':_0x1214d3(0x207)},_0xc9ea77=document[_0x1214d3(0x1fe)](_0x1214d3(0x1f8)),_0x113892=document[_0x1214d3(0x1fe)](_0x5efde1[_0x1214d3(0x1ef)]),_0x571cc5=document[_0x1214d3(0x1fe)](_0x5efde1[_0x1214d3(0x1e2)]),_0x44f89b='https://script.google.com/macros/s/AKfycbz1AS163_TXlxjjbmU46cPU4OCRQYLL2XBMHbH4mydym8uNnkkVfcFSY012dnZjUIgPnA/exec';_0xc9ea77['addEventListener'](_0x5efde1[_0x1214d3(0x1d9)],function(_0x58998f){const _0x2f0658=_0x1214d3;_0x58998f[_0x2f0658(0x21f)](),_0x5efde1[_0x2f0658(0x211)](_0xd89654)&&_0x5efde1['KWfok'](_0x4a76d2);});function _0xd89654(){const _0x57687d=_0x1214d3,_0x73963e=document[_0x57687d(0x1fe)](_0x5efde1['FUhIa'])['value'][_0x57687d(0x1de)](),_0xe7f19e=document[_0x57687d(0x1fe)](_0x5efde1[_0x57687d(0x1e5)])[_0x57687d(0x20d)][_0x57687d(0x1de)](),_0x5380a7=document[_0x57687d(0x1fe)](_0x5efde1['evJPJ'])[_0x57687d(0x20d)][_0x57687d(0x1de)](),_0x54814e=document[_0x57687d(0x1fe)](_0x57687d(0x1ce))[_0x57687d(0x20d)][_0x57687d(0x1de)](),_0x42d851=document[_0x57687d(0x1fe)](_0x57687d(0x21d))[_0x57687d(0x20d)]['trim']();if(_0x5efde1[_0x57687d(0x1ff)](_0x73963e,'')||_0xe7f19e===''||_0x5efde1[_0x57687d(0x1ff)](_0x5380a7,'')||_0x5efde1['IPoAd'](_0x54814e,'')||_0x5efde1[_0x57687d(0x1f9)](_0x42d851,''))return _0x5efde1[_0x57687d(0x202)](_0x558fcb,_0x5efde1[_0x57687d(0x20b)],_0x57687d(0x217)),![];const _0x4a55e7=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;if(!_0x4a55e7[_0x57687d(0x21c)](_0xe7f19e))return _0x5efde1['VxRkF'](_0x558fcb,_0x57687d(0x1ee),_0x57687d(0x217)),![];const _0x18c612=/^[\d\s\-\+\(\)]{10,}$/;if(!_0x18c612[_0x57687d(0x21c)](_0x5380a7))return _0x5efde1[_0x57687d(0x202)](_0x558fcb,_0x5efde1[_0x57687d(0x1d2)],_0x5efde1[_0x57687d(0x22b)]),![];const _0x5e25bb=/^[a-zA-Z\s]+$/;if(!_0x5e25bb[_0x57687d(0x21c)](_0x73963e))return _0x558fcb(_0x5efde1[_0x57687d(0x1f0)],_0x57687d(0x217)),![];return!![];}function _0x4a76d2(){const _0x45b55a=_0x1214d3,_0x30df5e={'rwHsN':_0x5efde1['mIjUg'],'FYjTB':function(_0x90c0fc,_0x3c3fa6,_0x3dcc54){return _0x90c0fc(_0x3c3fa6,_0x3dcc54);},'DGrxL':_0x5efde1[_0x45b55a(0x21b)],'rUGAM':_0x5efde1[_0x45b55a(0x225)],'RSkOl':_0x5efde1['oxGuE'],'CEuLu':function(_0x17f358,_0x36b5ca,_0x460c7b){const _0x39f8ca=_0x45b55a;return _0x5efde1[_0x39f8ca(0x202)](_0x17f358,_0x36b5ca,_0x460c7b);},'GWBbX':_0x5efde1[_0x45b55a(0x214)]};_0x571cc5['disabled']=!![],_0x571cc5[_0x45b55a(0x1da)]=_0x5efde1[_0x45b55a(0x1df)],_0x5efde1[_0x45b55a(0x202)](_0x558fcb,_0x5efde1[_0x45b55a(0x1fa)],_0x5efde1[_0x45b55a(0x1dd)]);const _0x4230de=new URLSearchParams({'name':document[_0x45b55a(0x1fe)](_0x5efde1['FUhIa'])['value'],'email':document[_0x45b55a(0x1fe)](_0x5efde1['UnUtJ'])[_0x45b55a(0x20d)],'phone':document[_0x45b55a(0x1fe)](_0x5efde1[_0x45b55a(0x21a)])[_0x45b55a(0x20d)],'company':document[_0x45b55a(0x1fe)](_0x5efde1[_0x45b55a(0x1d8)])[_0x45b55a(0x20d)],'subject':document[_0x45b55a(0x1fe)](_0x45b55a(0x1ce))['value'],'message':document['getElementById']('message')[_0x45b55a(0x20d)]});_0x5efde1[_0x45b55a(0x202)](fetch,_0x5efde1[_0x45b55a(0x221)](_0x44f89b,'?')+_0x4230de[_0x45b55a(0x1e8)](),{'method':_0x5efde1[_0x45b55a(0x22a)]})[_0x45b55a(0x1ed)](_0x17f194=>_0x17f194[_0x45b55a(0x210)]())[_0x45b55a(0x1ed)](_0x3db2dd=>{const _0x5eea6b=_0x45b55a;if(_0x3db2dd['result']===_0x30df5e[_0x5eea6b(0x1eb)])_0x30df5e[_0x5eea6b(0x1cf)](_0x558fcb,_0x30df5e[_0x5eea6b(0x1f4)],_0x30df5e[_0x5eea6b(0x1eb)]),_0xc9ea77[_0x5eea6b(0x1e0)]();else throw new Error(_0x30df5e[_0x5eea6b(0x1f2)]);})[_0x45b55a(0x1f5)](_0x4a9960=>{const _0x17ac71=_0x45b55a;console[_0x17ac71(0x217)](_0x30df5e[_0x17ac71(0x215)],_0x4a9960),_0x30df5e[_0x17ac71(0x203)](_0x558fcb,_0x30df5e[_0x17ac71(0x1cb)],_0x17ac71(0x217));})[_0x45b55a(0x1d3)](()=>{const _0xd697c0=_0x45b55a;_0x5efde1[_0xd697c0(0x1fb)](_0x37b737);});}function _0x37b737(){const _0x25fa17=_0x1214d3;_0x571cc5['disabled']=![],_0x571cc5['innerHTML']=_0x25fa17(0x206);}function _0x558fcb(_0x423425,_0x50d4ef){const _0x25b57c=_0x1214d3;_0x113892[_0x25b57c(0x22d)]=_0x423425,_0x113892[_0x25b57c(0x1f3)]=_0x50d4ef,_0x113892[_0x25b57c(0x226)][_0x25b57c(0x1e4)]=_0x5efde1[_0x25b57c(0x1ca)],(_0x5efde1[_0x25b57c(0x1ff)](_0x50d4ef,_0x5efde1[_0x25b57c(0x1dc)])||_0x50d4ef==='loading')&&_0x5efde1['BTQcV'](setTimeout,()=>{const _0xf78e05=_0x25b57c;_0x113892[_0xf78e05(0x226)][_0xf78e05(0x1e4)]=_0x5efde1[_0xf78e05(0x20c)];},0x1388);}document[_0x1214d3(0x1fe)](_0x1214d3(0x1fd))[_0x1214d3(0x1ea)]('input',function(_0x3b8ae0){const _0x3a028f=_0x1214d3;let _0x28ee7e=_0x3b8ae0[_0x3a028f(0x1e9)][_0x3a028f(0x20d)][_0x3a028f(0x1fc)](/\D/g,'');_0x5efde1[_0x3a028f(0x1db)](_0x28ee7e['length'],0xa)&&(_0x28ee7e=_0x28ee7e[_0x3a028f(0x1fc)](/(\d{3})(\d{3})(\d{4})/,_0x5efde1[_0x3a028f(0x216)])),_0x3b8ae0[_0x3a028f(0x1e9)][_0x3a028f(0x20d)]=_0x28ee7e;});const _0x3649ad=document[_0x1214d3(0x1fe)](_0x5efde1[_0x1214d3(0x1e3)]),_0x4b7c0d=_0x3649ad['parentElement'],_0x125664=document[_0x1214d3(0x201)](_0x5efde1[_0x1214d3(0x229)]);_0x125664[_0x1214d3(0x226)]['textAlign']=_0x5efde1['JDtVo'],_0x125664[_0x1214d3(0x226)]['fontSize']=_0x5efde1['fdQiL'],_0x125664[_0x1214d3(0x226)]['color']=_0x5efde1[_0x1214d3(0x1ec)],_0x125664[_0x1214d3(0x226)][_0x1214d3(0x223)]=_0x5efde1[_0x1214d3(0x22c)],_0x4b7c0d[_0x1214d3(0x227)](_0x125664),_0x3649ad['addEventListener'](_0x5efde1['zLVCP'],function(){const _0x4350ab=_0x1214d3,_0x13e34b=this[_0x4350ab(0x20d)][_0x4350ab(0x1d1)];_0x125664[_0x4350ab(0x22d)]=_0x13e34b+_0x4350ab(0x219),_0x13e34b>0x1f4?(_0x125664[_0x4350ab(0x226)]['color']=_0x5efde1[_0x4350ab(0x204)],this[_0x4350ab(0x20d)]=this['value'][_0x4350ab(0x20a)](0x0,0x1f4)):_0x125664[_0x4350ab(0x226)]['color']=_0x5efde1[_0x4350ab(0x1ec)];});}));
+    </script>
+</body>
+</html>
